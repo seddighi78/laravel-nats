@@ -23,7 +23,7 @@ class NatsServiceProvider extends ServiceProvider
             __DIR__.'/../config/nats.php' => config_path('nats.php'),
         ]);
 
-        App::bind(NatsClientFactoryInterface::class, NatsClientFactory::class);
+        App::singleton(NatsClientFactoryInterface::class, NatsClientFactory::class);
 
         if ($this->app->runningInConsole()) {
             $this->commands([NatsSubscriberWork::class]);
