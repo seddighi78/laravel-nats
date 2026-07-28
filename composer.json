@@ -1,6 +1,5 @@
 {
   "name": "seddighi78/laravel-nats",
-  "version": "1.0.1",
   "description": "Nats jetstream client for Laravel",
   "type": "library",
   "license": "MIT",
