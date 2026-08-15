@@ -8,8 +8,14 @@ use Exception;
 
 class NatsClientFactory implements NatsClientFactoryInterface
 {
+    private array $clients = [];
+
     public function getClient($connection = 'default'): Client
     {
+        if (isset($this->clients[$connection])) {
+            return $this->clients[$connection];
+        }
+        
         $parameters = config("nats.connections.$connection");
 
         if ($parameters === null) {
@@ -31,7 +37,9 @@ class NatsClientFactory implements NatsClientFactoryInterface
         if (isset($parameters['delay'])) {
             $configuration->setDelay($parameters['delay']['seconds'], $parameters['delay']['mode']);
         }
+        
+        $this->clients[$connection] = new Client($configuration);
 
-        return new Client($configuration);
+        return $this->clients[$connection];
     }
 }
